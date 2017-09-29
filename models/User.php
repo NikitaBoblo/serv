@@ -2,6 +2,14 @@
 
 namespace app\models;
 
+/**
+ * Class Users
+ * @package app\models
+ *
+ * @property integer id
+ * @property string name
+ * */
+
 class User extends \yii\base\Object implements \yii\web\IdentityInterface
 {
     public $id;

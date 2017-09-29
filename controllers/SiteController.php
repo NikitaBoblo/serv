@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Products;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -61,7 +63,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $params['products'] = Products::find()->all();
+
+//        $ph = $params['products'][0]->product_img;
+//        echo (Url::to("@web/uploads/imgs/{$ph[strlen($ph)-1]}/{$ph[strlen($ph)-2]}/{$ph}.jpg"));
+//        exit();
+
+//        echo '<pre>';
+//        print_r($params);
+//        exit();
+        return $this->render('index', $params);
     }
 
     /**
@@ -122,5 +133,30 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionProd($id = null) {
+
+        if ( $id == null ){
+            return $this->goHome();
+        } else {
+
+            $params['product'] = Products::find()
+                ->where("id={$id}")->one();
+
+            if ($params['product'] == null){
+                return $this->goHome();
+            }
+
+//            $params['back'] = $this->goBack();
+//
+//            echo '<pre>';
+//            print_r($params['back']);
+//            exit();
+
+            return $this->render('prod/index', $params);
+        }
+
+
     }
 }
