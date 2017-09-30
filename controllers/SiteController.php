@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\News;
 use app\models\Products;
+use Codeception\Module\Db;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -63,15 +65,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $params['products'] = Products::find()->all();
+        $params['news'] = News::find()->all();
 
-//        $ph = $params['products'][0]->product_img;
-//        echo (Url::to("@web/uploads/imgs/{$ph[strlen($ph)-1]}/{$ph[strlen($ph)-2]}/{$ph}.jpg"));
-//        exit();
-
-//        echo '<pre>';
-//        print_r($params);
-//        exit();
         return $this->render('index', $params);
     }
 
@@ -135,26 +130,20 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionProd($id = null) {
+    public function actionNews($id = null) {
 
         if ( $id == null ){
             return $this->goHome();
         } else {
 
-            $params['product'] = Products::find()
-                ->where("id={$id}")->one();
+            $params['news'] = News::find()
+                ->where("news_id={$id}")->one();
 
-            if ($params['product'] == null){
+            if ($params['news'] == null){
                 return $this->goHome();
             }
 
-//            $params['back'] = $this->goBack();
-//
-//            echo '<pre>';
-//            print_r($params['back']);
-//            exit();
-
-            return $this->render('prod/index', $params);
+            return $this->render('news/index', $params);
         }
 
 

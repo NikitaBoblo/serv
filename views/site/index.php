@@ -5,7 +5,7 @@
 $this->title = 'Market';
 
 //$this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = '';
+//$this->params['breadcrumbs'][] = '';
 ?>
 <div class="site-index">
 
@@ -35,15 +35,11 @@ $this->params['breadcrumbs'][] = '';
     <div class="body-content">
 
         <div class="row" >
-            <?php foreach ($products as $product) {
-                $ph = $product->product_img;?>
-                <div class="col-lg-4">
-<!--                <div class="col-lg-4" style="border: 1px solid black">-->
-                    <img src="<?=\yii\helpers\Url::to("@web/uploads/imgs/{$ph[strlen($ph)-1]}/{$ph[strlen($ph)-2]}/{$ph}.jpg") ?>"
-                         class="img-rounded" style="width: 100%; margin: 25px 0 0 0">
-                    <h2><?=$product->product_name;?></h2 >
-                    <p> <?=substr($product->product_descr, 0, 200) . '...';?></p>
-                    <p><a class="btn btn-default" href = "http://market.loc/site/prod/<?=$product->id;?>">Read more</a></p>
+            <?php foreach ($news as $news_one) { ?>
+                <div class="col-lg-12 news-item" data-news-id="<?=$news_one->news_id?>">
+                    <h2><?=$news_one->news_name;?></h2 >
+                    <p> <?=substr($news_one->news_text, 0, 500) . '...';?></p>
+                    <p><a class="btn btn-default" href = "<?=Yii::$app->homeUrl?>site/news/<?=$news_one->news_id;?>">Read more</a></p>
                 </div >
             <?php }?>
         </div >
