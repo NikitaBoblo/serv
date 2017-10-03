@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    var scrollPosition = 1;
+
     function getNews() {
         $.ajax({
             type: "post",
@@ -18,11 +20,14 @@ $(document).ready(function () {
                         '<div class="col-lg-12 news-item" data-news-id="' + value.news_id + '">' +
                             '<h2>' + value.news_name + '</h2 >' +
                             '<p>' + value.news_text.substr(0, 500) + '...' + '</p>' +
-                            '<p><a class="btn btn-default" data-news-id="' + value.news_id + '">Read more</a></p>' +
+                            '<a class="btn btn-default" data-news-id="' + value.news_id + '">Read more</a>' +
                         '</div >'
                         );
 
-                    })
+                    });
+                    $('html, body').animate({
+                        scrollTop: $('div[data-news-id="'+ scrollPosition +'"]').offset().top - $('nav').height()
+                    },500);
                 }
             },
             error: function (){
@@ -46,15 +51,18 @@ $(document).ready(function () {
                 if (json === null){
 
                 } else {
-                    console.log(json);
+                    // console.log(json);
                     $('.news-item').remove();
                     $('.news-box').append(
                         '<div class="col-lg-12 news-item-single" >' +
                         '<h1 align="center">' + json.news_name + '</h1>' +
                         '<p>' + json.news_text + '</p>' +
-                        '<p><a class="btn btn-default" data-btn-home="home">Home</a></p>' +
+                        '<a class="btn btn-default" data-btn-home="home">Home</a>' +
                         '</div >'
                     );
+                    $('html, body').animate({
+                        scrollTop: $('.wrap').first().offset().top
+                    },500);
 
                 }
 
@@ -65,7 +73,11 @@ $(document).ready(function () {
         })
     }
 
-    $(document).on('click', '.news-item', function () {
+    $(document).on('click', '.news-item', function (e) {
+        e.preventDefault();
+        // scrollPosition = $(this).offset().top - $(this).parent().offset().top;
+        scrollPosition = $(this).data('news-id');
+        // console.log(scrollPosition);
         aclick($(this).data('news-id'));
     });
 
