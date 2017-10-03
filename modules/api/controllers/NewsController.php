@@ -14,11 +14,13 @@ class NewsController extends \yii\web\Controller
     }
 
 
-    public function actionGet($id = '')
+    public function actionGet()
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
 
-        if ($id != ''){
+        $id = \Yii::$app->request->post('id');
+
+        if ($id != null){
             $req = News::find()
                 ->where("news_id={$id}")->one();
         } else {
